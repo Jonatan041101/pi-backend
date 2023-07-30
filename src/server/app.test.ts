@@ -3,7 +3,7 @@ import app from './app'; // Importa tu aplicación Express (app) que contiene la
 import serverStart from './server';
 
 describe('Inicialización del servidor', () => {
- it('debería iniciar el servidor y responder con un mensaje de bienvenida', async () => {
+ test('debería iniciar el servidor y responder con un mensaje de bienvenida', async () => {
   // No iniciamos el servidor aquí, solo obtenemos una instancia del "app"
   // y realizamos la prueba en el app en lugar de usar "app.listen"
   
