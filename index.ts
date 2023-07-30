@@ -1,5 +1,5 @@
 import serverStart from './src/server/server';
-// import './src/server/welcome';
+import './src/routes'
 const PORT = Number(process.env.PORT) || 3000;
 
 
