@@ -34,7 +34,7 @@ export const createRaceWithTemper = async (
     console.log(error);
   }
 };
-export const getAllRaceWithTemper = async () => {
+export const getRaceWithTemper = async () => {
   try {
     const races = await prisma.race.findMany({
       include: {
@@ -45,6 +45,8 @@ export const getAllRaceWithTemper = async () => {
           },
         },
       },
+      skip: 0,
+      take: 9,
     });
     return races;
   } catch (error) {

@@ -2,7 +2,7 @@ import { api } from '../util/super_test';
 import { RaceTemperResponse } from '../types/types';
 
 describe('Probando endpoint /race', () => {
-  test('GET /race deberia devolver un array de tipo Race[]', async () => {
+  test('GET /race deberia devolver un array de tipo RaceTemperResponse[] con un status de 200', async () => {
     const response = await api.get('/race');
 
     expect(response.body).toBeInstanceOf(Array);
