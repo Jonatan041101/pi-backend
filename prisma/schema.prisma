@@ -12,12 +12,12 @@ datasource db {
 
 model Race{
   id  String @id @default(uuid())
-  name String
+  name String @unique
   weight String 
   heigth String
   yearsOfLife String
   image String
-  temper RaceTemper[]
+  temperRace RaceTemper[]
 }
 model RaceTemper{
   id String @id @default(uuid())
@@ -28,6 +28,6 @@ model RaceTemper{
 }
 model Temper{
   id String @id @default(uuid())
-  name String
+  name String @unique
   race RaceTemper[]
 }

@@ -1,6 +1,10 @@
 import serverStart from './src/server/server';
-import { getRaces } from './src/wrapper';
+import { initialCreateRaces, initialCreateTemperaments } from './src/wrapper';
 const PORT = Number(process.env.PORT) || 3000;
 
 serverStart(PORT);
-getRaces();
+const intials = async () => {
+  await initialCreateTemperaments();
+  await initialCreateRaces();
+};
+// intials();

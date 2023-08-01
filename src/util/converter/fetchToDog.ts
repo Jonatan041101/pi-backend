@@ -1,13 +1,16 @@
 import { Race } from '@prisma/client';
 import { Breed } from '../../types/dogs';
+import { parseWeight } from '../parse/parseNumberTheString';
+import { RaceTemperType } from '../../types/types';
 
 export const fetchConvertRace = (breeds: Breed[]) => {
-  const races: Omit<Race, 'id'>[] = breeds.map((race) => ({
-    heigth: `${race.height.metric} cm`,
-    weight: `${race.weight.metric} kg`,
+  const races: RaceTemperType[] = breeds.map((race) => ({
+    heigth: `${parseWeight(race.height.metric)}`,
+    weight: `${parseWeight(race.weight.metric)}`,
     image: race.image.url,
     name: race.name.toLowerCase(),
-    yearsOfLife: race.life_span.replace('years', 'años'),
+    yearsOfLife: `${parseWeight(race.life_span)}`,
+    nameTemper: race.temperament?.toLowerCase().split(',') || [],
   }));
   return races;
 };
@@ -21,3 +24,6 @@ export const fetchConvertTemper = (breeds: Breed[]) => {
   });
   return temperStr;
 };
+
+// Obtener los números de cada cadena
+//  const parsedWeights = weights.map(weight => parseWeight(weight));
