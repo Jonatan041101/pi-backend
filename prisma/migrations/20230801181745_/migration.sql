@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Race" ALTER COLUMN "yearsOfLife" SET DATA TYPE TEXT;

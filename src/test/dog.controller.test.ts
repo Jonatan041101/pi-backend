@@ -17,6 +17,7 @@ describe('Probando endpoint /dog', () => {
       expect(race).toHaveProperty('weight');
       expect(race).toHaveProperty('heigth');
       expect(race).toHaveProperty('yearsOfLife');
+      expect(race).toHaveProperty('image');
     });
   });
 });

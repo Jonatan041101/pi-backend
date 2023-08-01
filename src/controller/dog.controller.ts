@@ -1,2 +1,8 @@
 import { Request, Response } from 'express';
-export const getDogs = async (_req: Request, res: Response) => {};
+import { prisma } from '../database/db';
+export const getDogs = async (_req: Request, res: Response) => {
+  const races = await prisma.race.findMany();
+  console.log(races);
+
+  res.json(races);
+};

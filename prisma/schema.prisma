@@ -15,7 +15,8 @@ model Race{
   name String
   weight String 
   heigth String
-  yearsOfLife Int
+  yearsOfLife String
+  image String
   temper RaceTemper[]
 }
 model RaceTemper{
