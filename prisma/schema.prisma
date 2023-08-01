@@ -9,3 +9,24 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Race{
+  id  String @id @default(uuid())
+  name String
+  weight String 
+  heigth String
+  yearsOfLife Int
+  temper RaceTemper[]
+}
+model RaceTemper{
+  id String @id @default(uuid())
+  raceId String
+  race Race @relation(fields: [raceId],references: [id])
+  temperId String
+  temper Temper @relation(fields: [temperId],references: [id])
+}
+model Temper{
+  id String @id @default(uuid())
+  name String
+  race RaceTemper[]
+}
