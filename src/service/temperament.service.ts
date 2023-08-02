@@ -14,11 +14,12 @@ export const searchTemper = async (name: string) => {
 };
 export const createTemper = async (name: string) => {
   try {
-    await prisma.temper.create({
+    const temper = await prisma.temper.create({
       data: {
         name: name.trim(),
       },
     });
+    return temper;
   } catch (error) {
     console.log(error);
   }

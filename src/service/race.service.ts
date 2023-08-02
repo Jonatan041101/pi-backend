@@ -1,6 +1,7 @@
 import { Temper } from '@prisma/client';
 import { prisma } from '../database/db';
-import { RaceTemperType } from '../types/types';
+import { RaceTemperResponse, RaceTemperType } from '../types/types';
+import { createTemper, searchTemper } from './temperament.service';
 export const createRaceWithTemper = async (
   race: RaceTemperType,
   temperaments: Temper[],
@@ -76,6 +77,46 @@ export const getRaceId = async (id: string) => {
       },
     });
     return dog;
+  } catch (error) {
+    console.log({ error });
+  }
+};
+export const createDogService = async (race: RaceTemperType) => {
+  try {
+    const temperamentAll: string[] = [];
+    for (let temper of race.nameTemper) {
+      const temperament = await searchTemper(temper);
+      if (!temperament) {
+        const newTemperament = await createTemper(temper);
+        if (newTemperament) temperamentAll.push(newTemperament?.id);
+      } else {
+        temperamentAll.push(temperament.id);
+      }
+    }
+    const raceCreated = await prisma.race.create({
+      data: {
+        heigth: race.heigth,
+        image: race.image,
+        weight: race.weight,
+        name: race.name,
+        yearsOfLife: race.yearsOfLife,
+        temperRace: {
+          createMany: {
+            data: temperamentAll.map((temperament) => ({
+              temperId: temperament,
+            })),
+          },
+        },
+      },
+      include: {
+        temperRace: {
+          include: {
+            temper: true,
+          },
+        },
+      },
+    });
+    return raceCreated;
   } catch (error) {
     console.log({ error });
   }
