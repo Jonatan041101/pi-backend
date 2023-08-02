@@ -24,3 +24,11 @@ export const createTemper = async (name: string) => {
     console.log(error);
   }
 };
+export const getAllTemperament = async () => {
+  try {
+    const temperaments = await prisma.temper.findMany();
+    return temperaments;
+  } catch (error) {
+    console.log({ error });
+  }
+};

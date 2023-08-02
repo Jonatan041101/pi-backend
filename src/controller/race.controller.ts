@@ -5,9 +5,10 @@ import {
   getRaceWithTemper,
 } from '../service/race.service';
 import { z } from 'zod';
-const isString = z.string().min(10).max(150);
-import { CONTEXT_RESPONSE, RESPONSE } from '../test/helpers/text_test';
+
+import { CONTEXT_RESPONSE } from '../test/helpers/text_test';
 import { RaceTemperType } from '../types/types';
+import { isArray, isNumber, isString } from '../util/validates/z';
 export const getDogs = async (req: Request, res: Response) => {
   try {
     const name = req.query.name ? String(req.query.name) : undefined;
@@ -40,8 +41,16 @@ export const getDog = async (req: Request, res: Response) => {
 };
 export const createDog = async (req: Request, res: Response) => {
   try {
-    const {} = req.body as RaceTemperType;
+    const { heigth, image, name, nameTemper, weight, yearsOfLife } =
+      req.body as RaceTemperType;
+    isString.parse(image);
+    isString.parse(name);
+    isArray.parse(nameTemper);
+    isNumber.safeParse(Number(heigth));
+    isNumber.safeParse(Number(weight));
+    isNumber.safeParse(Number(yearsOfLife));
     const race = await createDogService(req.body);
+    return res.json(race);
   } catch (error) {
     const err = error as Error;
     return res.status(500).json({ message: err.message });
