@@ -34,9 +34,16 @@ export const createRaceWithTemper = async (
     console.log(error);
   }
 };
-export const getRaceWithTemper = async () => {
+export const getRaceWithTemper = async (name?: string) => {
   try {
     const races = await prisma.race.findMany({
+      where: name
+        ? {
+            name: {
+              contains: name,
+            },
+          }
+        : {},
       include: {
         temperRace: {
           select: {
