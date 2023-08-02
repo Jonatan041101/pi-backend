@@ -1,7 +1,8 @@
 import { Router } from 'express';
-import { getDogs } from '../controller/race.controller';
+import { getDog, getDogs } from '../controller/race.controller';
 
 const router = Router();
 router.get('/', getDogs);
+router.get('/:id', getDog);
 
 export { router };

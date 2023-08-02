@@ -60,3 +60,23 @@ export const getRaceWithTemper = async (name?: string) => {
     console.log({ error });
   }
 };
+export const getRaceId = async (id: string) => {
+  try {
+    const dog = await prisma.race.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        temperRace: {
+          select: {
+            id: true,
+            temper: true,
+          },
+        },
+      },
+    });
+    return dog;
+  } catch (error) {
+    console.log({ error });
+  }
+};

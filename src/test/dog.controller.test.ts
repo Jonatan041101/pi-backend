@@ -32,4 +32,32 @@ describe('Probando endpoint /race', () => {
     expect(response.body).toEqual({ message: RESPONSE });
     expect(response.status).toBe(404);
   });
+  test(`GET /race/:id`, async () => {
+    const ID = '0006958a-224e-4b94-b393-a76897f5868f';
+    const response = await api.get(`/race/${ID}`);
+    const race: RaceTemperResponse = response.body;
+    expect(response.status).toBe(200);
+    expect(race).toHaveProperty('id');
+    expect(race).toHaveProperty('name');
+    expect(race).toHaveProperty('weight');
+    expect(race).toHaveProperty('heigth');
+    expect(race).toHaveProperty('yearsOfLife');
+    expect(race).toHaveProperty('image');
+    expect(race).toHaveProperty('temperRace');
+    expect(race.temperRace).toBeInstanceOf(Array);
+    race.temperRace.forEach((temper) => {
+      expect(temper).toHaveProperty('id');
+      expect(temper).toHaveProperty('temper');
+      expect(temper.temper).toHaveProperty('id');
+      expect(temper.temper).toHaveProperty('name');
+    });
+  });
+  test(`GET /race/:id not found`, async () => {
+    const ID = 'Este id no existe';
+    const response = await api.get(`/race/${ID}`);
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({
+      message: `El id ${ID} de la raza no existe`,
+    });
+  });
 });
